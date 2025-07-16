@@ -154,6 +154,68 @@ Self-hosting n8n requires technical knowledge, including:
 
 **Note**: n8n recommends self-hosting for expert users. Mistakes can lead to data loss, security issues, and downtime. If you aren't experienced at managing servers, consider [n8n Cloud](https://n8n.io/cloud/).
 
+## 🔧 Troubleshooting
+
+### Kubernetes Issues
+
+#### PersistentVolumeClaim Stuck in Pending State
+If your PVC shows as "Pending" status, this is often normal behavior for local-path storage provisioner:
+
+```bash
+# Check PVC status
+kubectl get pvc -n n8n
+
+# Describe PVC for detailed information
+kubectl describe pvc n8n-claim0 -n n8n
+```
+
+**Common causes and solutions**:
+
+1. **Local-path provisioner behavior**: The local-path storage provisioner waits for a pod to use the PVC before creating the volume. This is expected behavior.
+
+2. **Missing storage provisioner**: Ensure the local-path provisioner is running:
+   ```bash
+   kubectl get pods -n kube-system | grep local-path
+   ```
+
+3. **Node selection**: The provisioner will select a node automatically when a pod is scheduled.
+
+#### Pod Stuck in Pending State
+```bash
+# Check pod status
+kubectl get pods -n n8n
+
+# Describe pod for events
+kubectl describe pod <pod-name> -n n8n
+```
+
+**Common solutions**:
+- Ensure sufficient resources (CPU/Memory) on nodes
+- Check if PVC is bound
+- Verify node selectors and tolerations
+
+#### Checking Logs
+```bash
+# n8n application logs
+kubectl logs -n n8n deployment/n8n
+
+# PostgreSQL logs
+kubectl logs -n n8n deployment/postgres
+```
+
+### Docker Compose Issues
+
+#### Permission Denied Errors
+```bash
+# Fix file permissions
+sudo chown -R 1000:1000 ~/.n8n
+```
+
+#### Database Connection Issues
+- Verify database credentials in `.env` file
+- Check if PostgreSQL container is running
+- Ensure network connectivity between containers
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
