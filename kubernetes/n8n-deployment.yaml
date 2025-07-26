@@ -39,6 +39,10 @@ spec:
               value: "5432"
             - name: DB_POSTGRESDB_DATABASE
               value: n8n
+            - name: N8N_PROTOCOL
+              value: https
+            - name: N8N_HOST
+              value: n8n.do.umeshkhatiwada.com.np
             - name: DB_POSTGRESDB_USER
               valueFrom:
                 secretKeyRef:

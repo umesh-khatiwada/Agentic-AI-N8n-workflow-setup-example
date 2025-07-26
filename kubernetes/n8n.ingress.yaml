@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/enable-websocket: "true"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: n8n-ingress
+  namespace: n8n
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: n8n.do.umeshkhatiwada.com.np
+    http:
+      paths:
+      - backend:
+          service:
+            name: n8n
+            port:
+              number: 5678
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - n8n.do.umeshkhatiwada.com.np
+    secretName: n8n-tls

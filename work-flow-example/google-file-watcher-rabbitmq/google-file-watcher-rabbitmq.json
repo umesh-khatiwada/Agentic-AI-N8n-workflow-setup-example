@@ -1,0 +1,139 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "folderId": "",
+        "options": {}
+      },
+      "id": "googleDriveTrigger",
+      "name": "Google Drive Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "your-google-credentials-id",
+          "name": "your-google-credentials-name"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"name\"]}}",
+              "operation": "endsWith",
+              "value2": ".md"
+            },
+            {
+              "value1": "={{$json[\"name\"]}}",
+              "operation": "endsWith",
+              "value2": ".txt"
+            }
+          ]
+        }
+      },
+      "id": "ifCheckExtension",
+      "name": "Check Extension",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "fileId": "={{$json[\"id\"]}}"
+      },
+      "id": "downloadFile",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 1,
+      "position": [600, 300],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "your-google-credentials-id",
+          "name": "your-google-credentials-name"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{\n  json: {\n    content: $binary.data.data.toString('utf8'),\n    filename: $json.name,\n  }\n}];"
+      },
+      "id": "convertToText",
+      "name": "Convert File Buffer to Text",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "queue": "my-content-queue",
+        "jsonParameters": true,
+        "content": "={\n  \"filename\": \"{{$json[\"filename\"]}}\",\n  \"content\": \"{{$json[\"content\"]}}\"\n}"
+      },
+      "id": "sendToRabbitMQ",
+      "name": "Send to RabbitMQ",
+      "type": "n8n-nodes-base.rabbitmq",
+      "typeVersion": 1,
+      "position": [1000, 300],
+      "credentials": {
+        "rabbitMq": {
+          "id": "your-rabbitmq-credentials-id",
+          "name": "your-rabbitmq-credentials-name"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "googleDriveTrigger": {
+      "main": [
+        [
+          {
+            "node": "Check Extension",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Extension": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Convert File Buffer to Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert File Buffer to Text": {
+      "main": [
+        [
+          {
+            "node": "Send to RabbitMQ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "name": "Google Drive → RabbitMQ: File Publisher",
+  "version": 1
+}
