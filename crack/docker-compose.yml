@@ -1,0 +1,8 @@
+services:
+  n8n:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docker.ibaraki.app/crack/n8n:latest
+    ports:
+      - "5678:5678"
