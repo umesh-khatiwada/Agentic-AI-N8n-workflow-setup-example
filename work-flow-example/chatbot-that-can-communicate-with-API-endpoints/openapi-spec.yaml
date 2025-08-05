@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: Preferences API
+  version: 1.0.0
+paths:
+  /plans:
+    get:
+      summary: Get plans list
+      description: Retrieve plan list.
+      responses:
+        '200':
+          description: Plans list retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferences'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /plugins:
+    get:
+      summary: Get plugins list
+      description: Retrieve plugins list.
+      responses:
+        '200':
+          description: Plugins retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferences'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /accounts:
+    post:
+      summary: Create accounts
+      description: Create accounts using the provided payload.
+      requestBody:
+        $ref: '#/components/requestBodies/CreateAccountRequest'
+      responses:
+        '200':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    get:
+      summary: Get accounts list
+      description: Retrieve accounts list.
+      responses:
+        '200':
+          description: Accounts list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  '/accounts/{account_id}':
+    get:
+      summary: Get account by ID
+      description: >-
+        Retrieve account details using the account ID,get account details of
+        account ID={account_id}.
+      parameters:
+        - $ref: '#/components/parameters/AccountIdParam'
+      responses:
+        '200':
+          description: Account retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    UserPreferences:
+      type: object
+      properties:
+        theme:
+          type: string
+          example: dark
+        notifications:
+          type: boolean
+          example: true
+    Account:
+      type: object
+      required:
+        - id
+        - name
+        - country
+      properties:
+        id:
+          type: string
+          example: acc-1234
+        name:
+          type: string
+          example: Umesh
+        country:
+          type: string
+          example: Nepal
+  parameters:
+    AccountIdParam:
+      name: account_id
+      in: path
+      required: true
+      description: Unique identifier for the account
+      schema:
+        type: string
+        example: acc-1234
+  responses:
+    NotFound:
+      description: Resource not found
+    InternalError:
+      description: Internal server error
+  requestBodies:
+    CreateAccountRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+              - country
+            properties:
+              name:
+                type: string
+                example: ComputeSphere
+              country:
+                type: string
+                example: US

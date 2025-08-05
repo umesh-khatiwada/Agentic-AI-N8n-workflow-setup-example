@@ -1,0 +1,325 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "bearerAuth",
+        "path": "1134d801-7ee5-4301-9311-2287dc0a17ab"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        80
+      ],
+      "id": "1528c9ac-d12d-491a-98f9-4b09a658d35d",
+      "name": "MCP Server Trigger",
+      "webhookId": "1134d801-7ee5-4301-9311-2287dc0a17ab",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "raEl5axFCsIWwHNX",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Makes an HTTP request and returns the response data  name:\"perizer_data_curl_post\"",
+        "method": "POST",
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:141.0) Gecko/20100101 Firefox/141.0"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.5"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, br, zstd"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer Fake.dsfsd."
+            },
+            {
+              "name": "x-account-id",
+              "value": "0daf7ef7-b89c-4890-9cfa-78b06c96e04b"
+            },
+            {
+              "name": "Origin",
+              "value": "https://console.tmp.computesphere.com"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Referer",
+              "value": "https://console.tmp.computesphere.com/"
+            },
+            {
+              "name": "Sec-Fetch-Dest",
+              "value": "empty"
+            },
+            {
+              "name": "Sec-Fetch-Mode",
+              "value": "cors"
+            },
+            {
+              "name": "Sec-Fetch-Site",
+              "value": "same-site"
+            },
+            {
+              "name": "Priority",
+              "value": "u=0"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', ``, 'string') }}"
+            },
+            {
+              "name": "country",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {},
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        272
+      ],
+      "id": "ee2241fc-8e3c-4c88-9b7f-cdb569b4f948",
+      "name": "HTTP POST Request"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Makes an HTTP request and returns the response data  name:\"perizer_data_curl_get\"",
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:141.0) Gecko/20100101 Firefox/141.0"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.5"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, br, zstd"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbjlWUjF3bF9ELUtLNnA5UU5FQWRkd0N0eWloWUhIY2FjTGg5cENfdHBvIn0.eyJleHAiOjE3NTQ0MDY3NDksImlhdCI6MTc1NDM3Nzk0OSwiYXV0aF90aW1lIjoxNzU0Mzc2OTk5LCJqdGkiOiI5MTQ1NzQ1YS1kMjU4LTRkOTctYWY5Ny1hZTgzZDA2Zjg3ZmIiLCJpc3MiOiJodHRwczovL2FjY291bnRzLnRtcC5jb21wdXRlc3BoZXJlLmNvbS9yZWFsbXMvY29tcHV0ZXNwaGVyZSIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiIyOTQzZjdlMi02OWQ4LTQzZGItYWJkZS1iN2E5MmJhM2M0MDMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjb21wdXRlc3BoZXJlX2NsaWVudCIsInNpZCI6ImNiY2E4MmM5LWZkOWUtNGViMy05NWVkLWQwODA5MThkMDZkYSIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiaHR0cHM6Ly9kZXZhZG1pbi5jb21wdXRlc3BoZXJlLmNvbSIsImh0dHBzOi8vY29uc29sZS50bXAuY29tcHV0ZXNwaGVyZS5jb20iLCJodHRwczovL2NsdXN0ZXItYWRtaW4udG1wLmNvbXB1dGVzcGhlcmUuY29tIiwiaHR0cHM6Ly9kZXYuY29tcHV0ZXNwaGVyZS5jb20iLCJodHRwczovL2FkbWluLnRtcC5jb21wdXRlc3BoZXJlLmNvbSIsImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImh0dHA6Ly9sb2NhbGhvc3Q6NjAwMCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1jb21wdXRlc3BoZXJlIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJlYWxtLW1hbmFnZW1lbnQiOnsicm9sZXMiOlsidmlldy1yZWFsbSIsImNyZWF0ZS1jbGllbnQiLCJtYW5hZ2UtdXNlcnMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIiwicXVlcnktdXNlcnMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJ2aWV3LWFwcGxpY2F0aW9ucyIsInZpZXctY29uc2VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwibWFuYWdlLWNvbnNlbnQiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBjb3VudHJ5X2NvZGUgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6InVtZXNoIEtIQVRJV0FEQSIsInByZWZlcnJlZF91c2VybmFtZSI6InVzZXJAZ21haWwuY29tIiwiZ2l2ZW5fbmFtZSI6InVtZXNoIiwiZmFtaWx5X25hbWUiOiJLSEFUSVdBREEiLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIn0.LRrnLziqC8QZl0G-a8PyTlSSprcCYOx_VMbLWvA9T_eDHiQEdu-_hPiWfL3a1n0lwWUcQlunzxiLryhJpmvIHlO-AKSp7hU62XtDV7Jru9r5rdBEJ8NnO-zX-WXqdPTaLCffGCnEgE7fme7KJlOo_ApOGPHPojd236_d-Rb_lpDQF4vUOxM1jCwMbcGO_GBQ3x5CLLyrGVThCqqUiyJGYowebrI-rZGQNW3GqzezviMMBab4-5_M4C7Q4SgTymH2YdtWk-nrTz2j1DpNvZLgeex9RWLXsdIjKl3HOsW54x9a6dxCGaSbF4ifhzykjuYOO43No4Mq9QTxY2zAM8aXuw"
+            },
+            {
+              "name": "x-account-id",
+              "value": "0daf7ef7-b89c-4890-9cfa-78b06c96e04b"
+            },
+            {
+              "name": "Origin",
+              "value": "https://console.tmp.computesphere.com"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Referer",
+              "value": "https://console.tmp.computesphere.com/"
+            },
+            {
+              "name": "Sec-Fetch-Dest",
+              "value": "empty"
+            },
+            {
+              "name": "Sec-Fetch-Mode",
+              "value": "cors"
+            },
+            {
+              "name": "Sec-Fetch-Site",
+              "value": "same-site"
+            }
+          ]
+        },
+        "options": {},
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -608,
+        272
+      ],
+      "id": "20ca4450-322a-4524-ab75-b3f8c2a1e1ae",
+      "name": "HTTP GET Request"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Makes an HTTP request and returns the response data  name:\"perizer_data_curl_put\"",
+        "method": "PUT",
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:141.0) Gecko/20100101 Firefox/141.0"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.5"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, br, zstd"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', ``, 'string') }}"
+            },
+            {
+              "name": "x-account-id",
+              "value": "0daf7ef7-b89c-4890-9cfa-78b06c96e04b"
+            },
+            {
+              "name": "Origin",
+              "value": "https://console.tmp.computesphere.com"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Referer",
+              "value": "https://console.tmp.computesphere.com/"
+            },
+            {
+              "name": "Sec-Fetch-Dest",
+              "value": "empty"
+            },
+            {
+              "name": "Sec-Fetch-Mode",
+              "value": "cors"
+            },
+            {
+              "name": "Sec-Fetch-Site",
+              "value": "same-site"
+            }
+          ]
+        },
+        "options": {},
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -192,
+        272
+      ],
+      "id": "0b2ee505-9c11-4d51-8cde-7fab5a459310",
+      "name": "HTTP PUT Request"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "data",
+        "key": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Key', `redis_node`, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redisTool",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        256
+      ],
+      "id": "0a79a7ed-2cd3-42e7-a90f-c9ab99255d94",
+      "name": "Redis",
+      "executeOnce": false,
+      "credentials": {
+        "redis": {
+          "id": "BPMNxYj6iKrtk0Hr",
+          "name": "Redis account 2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "HTTP POST Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP PUT Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cf1548f4db5eddd01db2ff6e01ca65a010d75e058d9a7b5b8bc8fc21acf19c58"
+  }
+}
