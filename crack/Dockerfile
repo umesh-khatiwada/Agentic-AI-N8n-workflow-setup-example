@@ -11,4 +11,4 @@ RUN sed -i "s/getValue(feature) {/getValue(feature) {return undefined;/g" /usr/l
 USER node
 
 LABEL crack=true
-LABEL crack.author="Ibaraki Douji"
+LABEL crack.author="Umesh Khatiwada"
